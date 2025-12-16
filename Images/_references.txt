@@ -1,0 +1,3 @@
+- sunflowers.tif: Photograph taken by Daniel Sage, EPFL.
+- sheep.tif: Image from https://www.istockphoto.com/
+- grains.tif: Image from https://forum.image.sc/t/sem-grain-size-analysis-edge-detection/93128
