@@ -54,19 +54,15 @@ with app.setup:
     ground_truths_path = public_folder_path / "Ground_Truths"
 
     if "pyodide" in sys.modules:
-        # Create the `public` folder
         if not public_folder_path.exists():
-            os.mkdir(public_folder_path)
-
-            # Download and unzip the data from the repository
-            zip_path = Path("public") / "data.zip"
-            url = mo.notebook_location() / "public" / "data.zip"
+            # Download and unzip the public folder from the repository
+            zip_path = Path("public.zip")
+            url = mo.notebook_location() / "public.zip"
             r = requests.get(str(url))
             r.raise_for_status()
             zip_path.write_bytes(r.content)
             with zipfile.ZipFile(zip_path, "r") as zf:
-                zf.extractall(public_folder_path)
-            zip_path.unlink(missing_ok=True)  # Delete the zipped dataset
+                zf.extractall()
 
             print(f"Extracted data in: {public_folder_path}")
 
