@@ -3,7 +3,7 @@ import marimo
 __generated_with = "0.23.8"
 app = marimo.App()
 
-with app.setup:
+async with app.setup:
     import io
     import sys
     import os
@@ -22,7 +22,7 @@ with app.setup:
         n_objects = len(uniques)
         if 0 in uniques:  # 0 = background by convention; not counted
             n_objects -= 1
-    
+
         return n_objects
 
 
@@ -33,7 +33,7 @@ with app.setup:
         n_gt = _object_count(gtruth_mask)
         n_sub = _object_count(submission_mask)
         count_score = np.abs(n_gt - n_sub) / n_gt
-    
+
         return 1 - count_score
 
 
@@ -45,7 +45,7 @@ with app.setup:
         binary_sub = submission_mask > 0
         intersection = np.logical_and(binary_gt, binary_sub).sum()
         union = np.logical_or(binary_gt, binary_sub).sum()
-    
+
         return intersection / union
 
 
@@ -54,10 +54,13 @@ with app.setup:
     ground_truths_path = public_folder_path / "Ground_Truths"
 
     if "pyodide" in sys.modules:
+        import micropip
+        await micropip.install("tifffile")
+    
         if not public_folder_path.exists():
             # Download and unzip the public folder from the repository
             zip_path = Path("public.zip")
-            url = mo.notebook_location() / "public.zip"
+            url = "https://raw.githubusercontent.com/EPFL-Center-for-Imaging/segmentation-challenge/main/public.zip"
             r = requests.get(str(url))
             r.raise_for_status()
             zip_path.write_bytes(r.content)
