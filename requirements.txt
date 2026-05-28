@@ -4,3 +4,5 @@ colorama
 tabulate
 scikit-image
 juptyerlab
+marimo
+requests

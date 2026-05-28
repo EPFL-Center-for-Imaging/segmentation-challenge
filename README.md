@@ -1,10 +1,8 @@
 # Segmentation Challenge
 
-The goal of this workshop is to let you practice your segmentation skills by developing automated segmentation workflows for a selection of challenge images.
+The goal of this workshop is to let you practice your segmentation skills by developing automated segmentation workflows for a selection of "challenge" images.
 
-You can use any tool you want (Fiji, Python, etc.) to generate your segmentation masks. The idea is to test and figure out which methods work best for each image.
-
-Example tools: [Fiji](https://fiji.sc/), [MorpholibJ](https://imagej.net/plugins/morpholibj), [Scikit-image](https://scikit-image.org/), [CellPose](https://www.cellpose.org/), [SAM](https://github.com/facebookresearch/segment-anything), [Ilastik](https://www.ilastik.org/)...
+You can use any tool you want ([Fiji](https://fiji.sc/), [MorpholibJ](https://imagej.net/plugins/morpholibj), [Scikit-image](https://scikit-image.org/), [CellPose](https://www.cellpose.org/), [SAM](https://github.com/facebookresearch/segment-anything), [Ilastik](https://www.ilastik.org/)...) to generate your segmentation masks. The idea is to test and figure out which methods work best for each image.
 
 ## Images
 
@@ -22,13 +20,18 @@ The challenge images are located in the [`Images`](./Images/) folder.
 
 ## Ground truths
 
-For each image, a segmentation mask representing the *ground truth* is available in the [`Ground_Truths`](./Ground_Truths/) folder. These ground truth masks have been carefully edited to be as close as possible to an ideal result.
+For each image, a *ground truth* segmentation mask is available in the [`Ground_Truths`](./Ground_Truths/) folder. These ground truth masks have been carefully edited to be as close as possible to an ideal result.
 
 ## Submissions
 
 You can share your segmentation masks to see how they compare to the “ground truthˮ and other submissions.
 
-Upload your segmentation mask files (e.g., in `TIFF` format) by drag and dropping them into the [`Submissions`](./Submissions/) folder of the shared Jupyter lab session provided by workshop organizers. The segmentation mask should be a labeled array with values representing instances. It should have the same size (same number of pixels in X and Y) as the original image.
+Upload your segmentation mask files (in **TIFF** format) by drag and dropping them into 
+
+- the Marimo thing I'll make (TODO) or
+- the [`Submissions`](./Submissions/) folder of the shared Jupyter lab session provided by workshop organizers.
+
+The segmentation mask should be a **labeled array** with values representing instances. It should have the same size (same number of pixels in X and Y) as the original image.
 
 ## Evaluation
 
@@ -43,7 +46,7 @@ These metrics are used to rank submissions in the **leaderboards** displayed on 
 
 ## Solutions
 
-A few reference solutions are available in the [Solutions](./Solutions/) folder. We encourage you to look at them *after* the workshop!
+A few reference solutions are available in the [Solutions](./Solutions/) folder. We encourage you to take a look at them *after* the workshop!
 
 ---
 ## Setup (for workshop organizers)
