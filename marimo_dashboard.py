@@ -1,7 +1,7 @@
 import marimo
 
 __generated_with = "0.23.8"
-app = marimo.App()
+app = marimo.App(width="full")
 
 async with app.setup:
     import io
@@ -56,7 +56,8 @@ async with app.setup:
     if "pyodide" in sys.modules:
         import micropip
         await micropip.install("tifffile==2025.5.10")
-    
+        await micropip.install("anybioimage")
+
         if not public_folder_path.exists():
             # Download and unzip the public folder from the repository
             zip_path = Path("public.zip")
@@ -84,7 +85,7 @@ async with app.setup:
 @app.cell(hide_code=True)
 def _(challenges_dropdown):
     image = skimage.io.imread(images_path / f"{challenges_dropdown.value}.tif")
-    return
+    return (image,)
 
 
 @app.cell(hide_code=True)
@@ -143,7 +144,8 @@ def _():
 def _():
     challenges_dropdown = mo.ui.dropdown(challenges, value=challenges[0], label="Challenge")
 
-    challenges_dropdown
+    mo.callout(mo.hstack([challenges_dropdown], justify="center"), kind="neutral")
+
     return (challenges_dropdown,)
 
 
@@ -191,8 +193,34 @@ def _(challenges_dropdown, gt_mask, mask, valid_mask):
 
 
 @app.cell
-def _():
-    # display_nicely(gt_mask, mask, image)
+def _(gt_mask, image):
+    from anybioimage import BioImageViewer
+
+    viewer = BioImageViewer()
+
+    viewer.set_image(image)
+
+    viewer.add_mask(
+        gt_mask,
+        name="Ground truth",
+        opacity=0.5,
+        contours_only=True,
+    )
+
+    mo.ui.anywidget(viewer)
+    return (viewer,)
+
+
+@app.cell
+def _(mask, valid_mask, viewer):
+    mo.stop(not valid_mask)
+
+    viewer.add_mask(
+        mask,
+        name="Submission",
+        color="#ff0000",
+        opacity=0.5,
+    )
     return
 
 
