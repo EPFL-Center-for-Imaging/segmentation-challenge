@@ -55,7 +55,7 @@ async with app.setup:
 
     if "pyodide" in sys.modules:
         import micropip
-        await micropip.install("tifffile")
+        await micropip.install("tifffile==2025.5.10")
     
         if not public_folder_path.exists():
             # Download and unzip the public folder from the repository
