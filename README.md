@@ -1,52 +1,46 @@
+![logo](https://imaging.epfl.ch/resources/logo-for-gitlab.svg)
 # Segmentation Challenge
 
-The goal of this workshop is to let you practice your segmentation skills by developing automated segmentation workflows for a selection of "challenge" images.
+The goal of this challenge is to let you practice your segmentation skills by developing automated segmentation workflows for a selection of images.
 
 You can use any tool you want ([Fiji](https://fiji.sc/), [MorpholibJ](https://imagej.net/plugins/morpholibj), [Scikit-image](https://scikit-image.org/), [CellPose](https://www.cellpose.org/), [SAM](https://github.com/facebookresearch/segment-anything), [Ilastik](https://www.ilastik.org/)...) to generate your segmentation masks. The idea is to test and figure out which methods work best for each image.
 
 ## Images
 
-The challenge images are located in the [`Images`](./Images/) folder.
+The challenge images are located in the [`Images`](./public/Images/) folder. For each image, a *ground truth* segmentation mask is available in the [`Ground_Truths`](./public/Ground_Truths/) folder. These ground truth masks have been carefully edited to be as close as possible to an ideal result.
 
-![Images](./assets/overview.png)
+<img src="./assets/overview.svg" alt="Images" style="width:100%;" />
 
-| Image      | Description |
-| ---------- | ----------- |
-| sunflowers.tif | An optical image of sunflower seeds. |
-| grains.tif | An SEM image of a grain structure. |
-| sheep.tif | An aerial photograph of sheep in a field. |
+| Image      | Description | Credit |
+| ---------- | ----------- | ------ |
+| sunflowers.tif | An optical image of sunflower seeds. | Courtesy of Daniel Sage, EPFL |
+| fish.tif | A historical drawing of fish in the Limat river. | Viatimages @ Unil |
+| grains.tif | An SEM image of a grain structure. | Courtesy of Nanolab @ EPFL, Anna Varini |
 
-**Image references**: the original image sources are mentioned [here](./Images/_references.txt).
+## Evaluate your segmentation
 
-## Ground truths
+You can evaluate your segmentation mask and see how it compares to the “ground truthˮ using our web dashboard:
 
-For each image, a *ground truth* segmentation mask is available in the [`Ground_Truths`](./Ground_Truths/) folder. These ground truth masks have been carefully edited to be as close as possible to an ideal result.
+[➡️ Web Dashboard](https://epfl-center-for-imaging.github.io/segmentation-challenge/)
 
-## Submissions
+![Marimo screenshot](./assets/marimo_screenshot.png)
 
-You can share your segmentation masks to see how they compare to the “ground truthˮ and other submissions.
+Your segmentation masks should be labeled arrays with values representing instances. They should have the same size (number of pixels in X and Y) as the original image. They should be saved as a TIFF file.
 
-Upload your segmentation mask files (in **TIFF** format) by drag and dropping them into 
+The quality of your segmentation mask is evaluated based on two metrics:
 
-- the Marimo thing I'll make (TODO) or
-- the [`Submissions`](./Submissions/) folder of the shared Jupyter lab session provided by workshop organizers.
+- **Object count** relative to the ground truth count.
+- **Intersection over union (IoU)** computed on the binary version of the mask.
 
-The segmentation mask should be a **labeled array** with values representing instances. It should have the same size (same number of pixels in X and Y) as the original image.
+We also average both scores to give an overall score.
 
-## Evaluation
+**Shared folder**
 
-The quality of your submissions is evaluated based on two metrics:
-
-- **Object count** relative to the ground truth count (`oc_score`).
-- **Intersection over union (IoU)** computed on the binary version of the mask (`iou_score`).
-
-We also average both scores to give an overall score (`overall_score`).
-
-These metrics are used to rank submissions in the **leaderboards** displayed on screen.
+If your workshop organizers have prepared a shared Jupyterlab session, you can upload your segmentation mask files (in TIFF format) by drag and dropping them into the [`Submissions`](./Submissions/) folder on Jupyter lab, so that you can also see how they compare to other submissions.
 
 ## Solutions
 
-A few reference solutions are available in the [Solutions](./Solutions/) folder. We encourage you to take a look at them *after* the workshop!
+A few reference segmentation workflows are available in the [solutions](./solutions/) folder. We encourage you to take a look at them *after* the workshop!
 
 ---
 ## Setup (for workshop organizers)
@@ -83,18 +77,10 @@ In the shared Jupyter lab session:
 python leaderboard.py
 ```
 
-2. In a new terminal window, run [display.py](./Scripts/display.py) to display a particular leaderboard.
-
-For the overall leaderboard:
+2. In a new terminal window, run [display.py](./Scripts/display.py) to display the leaderboard of a particular challenge:
 
 ```bash
-python display.py leaderboard
-```
-
-For a specific challenge:
-
-```bash
-python display.py sheep
+python display.py grains
 ```
 
 Repeat this process for all challenges, then reorganize the layout so that the leaderboards are visible side-by-side:

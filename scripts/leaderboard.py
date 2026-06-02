@@ -19,7 +19,7 @@ UPDATE_INTERVAL_SEC = 5
 # Where this script lives (in the /Scripts directory)
 root = Path(__file__)
 
-ground_truths_path = root.parents[1] / "Ground_Truths"
+ground_truths_path = root.parents[1] / "public" / "Ground_Truths"
 if not ground_truths_path.exists():
     raise NotADirectoryError(ground_truths_path)
 
@@ -95,24 +95,14 @@ while True:
         df_challenge["rank"] = range(len(df_challenge))  # The pseudo-participant `ground_truth` will get rank=0 and be displayed at the top
         df[f"points_{challenge}"] = n_participants - df_challenge["rank"]  # Participating should give people at least 1 point!
 
-    # Compute the total points and overall rank in the leaderboard
-    sub_df = df[["participant"] + [f"points_{challenge}" for challenge in challenges]].copy()
-    sub_df["points_total"] = sub_df[[f"points_{challenge}" for challenge in challenges]].fillna(0).sum(axis=1)
-    
-    # Group by participant
-    leaderboard_df = sub_df.groupby("participant").sum().sort_values(by="points_total", ascending=False)
-    leaderboard_df["overall_rank"] = range(len(leaderboard_df))
-
     # Save results as CSV under Leaderboard/
     for challenge in challenges:
         df_challenge = df[df['challenge'] == challenge].sort_values(by="overall_score", ascending=False).drop("challenge", axis="columns")
         df_challenge["rank"] = range(1, len(df_challenge) + 1)
         dfc = df_challenge[["participant", "oc_score", "iou_score", "overall_score", "rank"]].set_index("participant")
         dfc.to_csv(leaderboard_path / f"{challenge}.csv")
-    leaderboard_df.to_csv(leaderboard_path / "leaderboard.csv")
 
     # Update every X sec.
     time.sleep(UPDATE_INTERVAL_SEC)
     
     print("Updating...")
-    print(leaderboard_df)

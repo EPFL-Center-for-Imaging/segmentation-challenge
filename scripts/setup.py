@@ -7,10 +7,10 @@ import os
 
 from pathlib import Path
 
-# Where this script lives (in the /Scripts directory)
+# Where this script lives (in the /scripts directory)
 root = Path(__file__)
 
-ground_truths_path = root.parents[1] / "Ground_Truths"
+ground_truths_path = root.parents[1] / "public" / "Ground_Truths"
 if not ground_truths_path.exists():
     raise NotADirectoryError(ground_truths_path)
 

@@ -1,3 +1,4 @@
 - sunflowers.tif: Photograph taken by Daniel Sage, EPFL.
+- grains.tif: Courtesy of Nanolab @ EPFL, Anna Varini
+- fish.tif: https://catima.unil.ch/viatimages
 - sheep.tif: Image from https://www.istockphoto.com/
-- grains.tif: Image from https://forum.image.sc/t/sem-grain-size-analysis-edge-detection/93128
