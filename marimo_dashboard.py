@@ -87,6 +87,10 @@ async with app.setup:
     if "pyodide" in sys.modules:
         import micropip
         await micropip.install("tifffile==2025.5.10")
+        await micropip.install("plotly")
+        import plotly.express as px
+        import plotly.graph_objects as go
+        from plotly.subplots import make_subplots
 
         if not public_folder_path.exists():
             # Download and unzip the public folder from the repository
@@ -99,6 +103,10 @@ async with app.setup:
                 zf.extractall()
 
             print(f"Extracted data in: {public_folder_path}")
+    else:
+        import plotly.express as px
+        import plotly.graph_objects as go
+        from plotly.subplots import make_subplots
 
     challenges = [d.name for d in ground_truths_path.iterdir() if d.is_dir()]
 
