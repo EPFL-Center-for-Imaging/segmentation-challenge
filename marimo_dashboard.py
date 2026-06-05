@@ -18,9 +18,6 @@ async with app.setup:
     import skimage.io
     from skimage.measure import find_contours
     from skimage.color import gray2rgb
-    import plotly.express as px
-    import plotly.graph_objects as go
-    from plotly.subplots import make_subplots
 
 
     def _object_count(mask: np.ndarray) -> int:
