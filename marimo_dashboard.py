@@ -158,9 +158,9 @@ def _():
 
     ## Images
 
-    The challenge images are located in the [`Images`](./public/Images/) folder in the sidebar, on the right (under "View files"). For each image, a *ground truth* segmentation mask is available in the [`Ground_Truths`](./public/Ground_Truths/) folder. These ground truth masks have been carefully edited to be as close as possible to an ideal result.
+    The challenge images are located in the [`Images`](https://github.com/EPFL-Center-for-Imaging/segmentation-challenge/tree/main/public/Images) folder. For each image, a *ground truth* segmentation mask is available in the [`Ground_Truths`](https://github.com/EPFL-Center-for-Imaging/segmentation-challenge/tree/main/public/Ground_Truths) folder. These ground truth masks have been carefully edited to be as close as possible to an ideal result.
 
-    Select a challenge image to work on:
+    You can start by selecting a challenge image to work on:
     """)
     return
 
@@ -174,22 +174,86 @@ def _():
 
 
 @app.cell
-def _(base, challenges_dropdown):
-    _fig = make_subplots()
+def _(challenges_dropdown, gt_mask, image, viewer_size):
+    _fig = make_subplots(
+        rows=1,
+        cols=2,
+        column_widths=[0.5, 0.5],
+        horizontal_spacing=0.02,
+        subplot_titles=("Image", "Ground truth"),
+    )
 
-    for _tr in base.data:
+    _fig.update_annotations(
+        font=dict(size=16, color="black")
+    )
+
+    base3 = px.imshow(
+        gray2rgb(image) if len(image.shape) == 2 else image,
+        height=viewer_size,
+        color_continuous_scale="gray",
+        contrast_rescaling="minmax",
+        aspect="equal",
+    )
+
+    for _tr in base3.data:
         _fig.add_trace(copy.deepcopy(_tr), row=1, col=1)
 
-    _fig.update_xaxes(showticklabels=False)
-    _fig.update_yaxes(showticklabels=False)
 
-    mo.callout(
-        mo.hstack(
-            [mo.vstack([challenges_dropdown, _fig], align="center")], 
-            justify="center"
-        ), 
-        kind="neutral"
+    def random_label_rgb(label_img, seed=0, background_label=0):
+        labels = np.unique(label_img)
+        rng = np.random.default_rng(seed)
+
+        lut = {}
+        for lab in labels:
+            if lab == background_label:
+                lut[lab] = np.array([0, 0, 0], dtype=np.uint8)
+            else:
+                lut[lab] = rng.integers(0, 256, size=3, dtype=np.uint8)
+
+        rgb = np.zeros((*label_img.shape, 3), dtype=np.uint8)
+        for lab, color in lut.items():
+            rgb[label_img == lab] = color
+
+        return rgb
+
+    gt_rgb = random_label_rgb(gt_mask, seed=42)
+
+    gt_view = px.imshow(
+        gt_rgb,
+        height=viewer_size,
+        aspect="equal",
     )
+
+    for _tr in gt_view.data:
+        _fig.add_trace(copy.deepcopy(_tr), row=1, col=2)
+
+    for _ax in ["xaxis", "xaxis2"]:
+        _fig.layout[_ax].update(
+            showticklabels=False,
+            showgrid=False,
+            visible=False,
+            zeroline=False,
+        )
+
+    for _ax, _xanchor in [("yaxis", "x"), ("yaxis2", "x2")]:
+        _fig.layout[_ax].update(
+            showticklabels=False,
+            showgrid=False,
+            visible=False,
+            zeroline=False,
+            scaleanchor=_xanchor,
+            autorange="reversed",
+        )
+
+    _fig.update_layout(
+        coloraxis_showscale=False,
+        margin=dict(l=0, r=0, b=30, t=30, pad=0),
+        plot_bgcolor="white",
+        paper_bgcolor="white",
+        showlegend=False,
+    )
+
+    mo.vstack([challenges_dropdown, mo.ui.plotly(_fig)], justify="center", align="center")
     return
 
 
@@ -324,7 +388,7 @@ def _(gt_scatter, image, mask):
     )
 
     mo.ui.plotly(fig) if not isinstance(mask, np.ndarray) else None
-    return base, viewer_size
+    return (viewer_size,)
 
 
 @app.cell
