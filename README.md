@@ -13,9 +13,9 @@ The challenge images are located in the [`Images`](./public/Images/) folder. For
 
 | Image      | Description | Credit |
 | ---------- | ----------- | ------ |
-| sunflowers.tif | An optical image of sunflower seeds. | Courtesy of Daniel Sage, EPFL |
-| fish.tif | A historical drawing of fish in the Limat river. | Viatimages @ Unil |
-| grains.tif | An SEM image of a grain structure. | Courtesy of Nanolab @ EPFL, Anna Varini |
+| [sunflowers.tif](https://github.com/EPFL-Center-for-Imaging/segmentation-challenge/blob/56c4cc4e8e0153f9fa9b4c27dbe84a54452e7074/public/Images/sunflowers.tif) | An optical image of sunflower seeds. | Courtesy of Daniel Sage, EPFL |
+| [fish.tif](https://github.com/EPFL-Center-for-Imaging/segmentation-challenge/blob/56c4cc4e8e0153f9fa9b4c27dbe84a54452e7074/public/Images/fish.tif) | A historical drawing of fish in the Limat river. | Viatimages @ Unil |
+| [grains.tif](https://github.com/EPFL-Center-for-Imaging/segmentation-challenge/blob/56c4cc4e8e0153f9fa9b4c27dbe84a54452e7074/public/Images/grains.tif) | An SEM image of a grain structure. | Courtesy of Nanolab @ EPFL, Anna Varini |
 
 ## Evaluate your segmentation
 
