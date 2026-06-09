@@ -27,6 +27,7 @@ venv/
 **/_version.py
 todo.txt
 *.ilp
+layouts/
 
 Submissions/**/*.tif
 Leaderboard/*.csv

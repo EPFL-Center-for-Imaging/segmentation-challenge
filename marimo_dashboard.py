@@ -132,19 +132,14 @@ def _(challenges_dropdown):
 
 @app.cell(hide_code=True)
 def _():
-    mo.md(r"""
-    ![logo](https://imaging.epfl.ch/resources/logo-for-gitlab.svg)
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _():
     mo.hstack(
         [
-            mo.md("# Segmentation Challenge"), 
+            mo.vstack([
+                mo.md("![logo](https://imaging.epfl.ch/resources/logo-for-gitlab.svg)"),
+                mo.md("# Segmentation Challenge"),  
+            ]),
             mo.md("[➡️ GitHub repository](https://github.com/EPFL-Center-for-Imaging/segmentation-challenge)")
-        ]
+        ], align="end"
     )
     return
 
